@@ -1,0 +1,64 @@
+﻿@model String
+@{  Layout = "~/Views/Shared/_Layout.cshtml";}
+
+@section scripts
+{
+    
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+    @using (Ajax.BeginForm("SearchPeople", "Home", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "searchResults",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId="waitimage"
+    }))
+    { 
+        <div>
+            @Html.TextBox("search")
+            <input type="submit" value="Search" />
+            <br/>
+            <br/>
+
+            <img id="waitimage" src="~/Images/loading.GIF" style="display:none"/>
+        </div>
+    }
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+               First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Interests
+            </th>
+            <th>
+                Picture
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="searchResults">
+            @Html.Action("SearchPeople",new { search="" })
+        </tbody>
+    </table>
+
